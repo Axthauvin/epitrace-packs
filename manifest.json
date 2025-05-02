@@ -12,7 +12,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["img/*"],
+      "resources": ["img/*", "music/*"],
       "matches": ["*://intra.forge.epita.fr/*"]
     }
   ],

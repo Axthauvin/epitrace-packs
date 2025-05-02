@@ -208,6 +208,13 @@ async function openPackAnimation(button, inputPercentage) {
     return browserAPI.runtime.getURL("img/pack.png");
   }
 
+  // --- OUTRO MUSIC SETUP ---
+  let outroAudio = new Audio(browserAPI.runtime.getURL("music/outro.mp3"));
+  outroAudio.currentTime = 0;
+  outroAudio.volume = 1.0;
+  outroAudio.play();
+  // --- END OUTRO MUSIC SETUP ---
+
   let pack = document.createElement("div");
   pack.classList.add("pack");
   pack.style.backgroundImage = `url(${main_pack()})`;
@@ -223,81 +230,46 @@ async function openPackAnimation(button, inputPercentage) {
     .getElementsByTagName("trace-symbol")[0]
     .getAttribute("link");
 
-  /*for (let i = 0; i < 3; i++) {
-    let randomPercentage = ; // Random percentage between 0 and 100
-    
-  }*/
   setTimeout(() => {
-    let currentPercentage = 100;
-    let decreaseTime = 1000; // 1 second total decrease time
-    let steps = 10; // Number of steps
-    let stepTime = decreaseTime / steps;
-
-    let percentages = [
-      Math.floor(Math.random() * 100),
-      //Math.floor(Math.random() * 100),
-      inputPercentage,
-    ];
-
-    pack_text.style.color = get_color(get_image(currentPercentage));
-
+    let steps = 20; // total steps before showing the result
+    let stepTime = 100; // ms per step (20*100=2000ms)
+    let pack_texts = [];
+    for (let i = 0; i < steps; i++) {
+      pack_texts.push(Math.floor(Math.random() * 100));
+    }
+    pack_texts.push(inputPercentage); // final result
     let i = 0;
-
-    let decrement = (100 - percentages[i]) / steps;
-
     let interval = setInterval(() => {
-      if (currentPercentage > percentages[i]) {
-        // Generate a random variation
-        currentPercentage -= decrement;
-        currentPercentage = Math.max(currentPercentage, percentages[i]); // Ensure it doesn't go below target
-
-        pack_text.textContent = Math.floor(currentPercentage);
-        pack_text.style.color = get_color(get_image(currentPercentage));
-        pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
-      } else {
-        pack_text.textContent = percentages[i];
-
-        pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
-
-        if (i == percentages.length - 1) {
-          clearInterval(interval);
-          if (percentages[i] == 100) {
-            make_confetis();
-          } else if (percentages[i] == 0) {
-            pack.style.backgroundImage = `url(${browserAPI.runtime.getURL(
-              "img/rip_bozo.jpg"
-            )})`;
-
-            pack.style.width = "744px";
-            pack.style.height = "609px";
-            pack_text.style.display = "none";
-          }
-
-          pack.style.cursor = "pointer";
-
-          let span = document.createElement("span");
-          span.textContent = "Click on the card to see your trace";
-          span.style.color = "white";
-          span.style.position = "absolute";
-          span.style.bottom = "10px";
-          span.style.left = "50%";
-          span.style.transform = "translateX(-50%)";
-          span.style.fontSize = "20px";
-          span.style.fontWeight = "bold";
-          document.getElementById("pack-displayer").appendChild(span);
-
-          addHashToDB(href);
-
-          pack.addEventListener("click", function () {
-            document.location.href = href;
-          });
+      pack_text.textContent = pack_texts[i];
+      pack_text.style.color = get_color(get_image(pack_texts[i]));
+      pack.style.backgroundImage = `url(${get_url(pack_texts[i])})`;
+      if (i === pack_texts.length - 1) {
+        clearInterval(interval);
+        if (inputPercentage == 100) {
+          make_confetis();
+        } else if (inputPercentage == 0) {
+          pack.style.backgroundImage = `url(${browserAPI.runtime.getURL("img/rip_bozo.jpg")})`;
+          pack.style.width = "744px";
+          pack.style.height = "609px";
+          pack_text.style.display = "none";
         }
-
-        i++;
-
-        decrement = (100 - percentages[i]) / steps;
-        currentPercentage = 100;
+        pack.style.cursor = "pointer";
+        let span = document.createElement("span");
+        span.textContent = "Click on the card to see your trace";
+        span.style.color = "white";
+        span.style.position = "absolute";
+        span.style.bottom = "10px";
+        span.style.left = "50%";
+        span.style.transform = "translateX(-50%)";
+        span.style.fontSize = "20px";
+        span.style.fontWeight = "bold";
+        document.getElementById("pack-displayer").appendChild(span);
+        addHashToDB(href);
+        pack.addEventListener("click", function () {
+          document.location.href = href;
+        });
       }
+      i++;
     }, stepTime);
   }, 1000);
 }

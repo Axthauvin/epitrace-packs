@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pack Animation Test</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #222; color: #fff; font-family: sans-serif; }
+    .banner { background: #181c20; padding: 24px 0 16px 0; text-align: center; border-radius: 0 0 16px 16px; box-shadow: 0 2px 16px #0006; margin-bottom: 32px; }
+    .banner h1 { margin: 0 0 12px 0; font-size: 2em; }
+    .banner .btn { background: #007BFF; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 0 10px; transition: background 0.2s; }
+    .banner .btn:active { background: #0056b3; }
+    .test-container { margin: 0 auto; max-width: 600px; text-align: center; }
+    .pack { width: 400px; height: 600px; margin: 40px auto 0 auto; background-size: cover; border-radius: 16px; box-shadow: 0 4px 24px #0008; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .text-pack { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 100px; font-weight: bold; color: #fff; text-shadow: 0 2px 8px #000; }
+    .confetti-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
+    .confetti-piece { position: absolute; width: 12px; height: 24px; border-radius: 4px; background: var(--confetti-color, #fff); animation: fall var(--fall-duration, 4s) linear forwards; }
+    @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0.7; } }
+    #pack-displayer { z-index: 10000; }
+    .instructions { color: #bbb; margin: 24px 0 0 0; font-size: 1.1em; }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <h1>Pack Animation + Outro Music Test</h1>
+    <button class="btn" id="btn-100">Trigger 100%</button>
+    <button class="btn" id="btn-0">Trigger 0%</button>
+    <button class="btn" id="btn-random">Trigger Random</button>
+
+  </div>
+  <div class="test-container">
+    <div id="mock-pack" class="pack" style="background-image:url('img/pack.png');">    </div>
+  </div>
+  <script>
+    // Mock the browser API for local testing
+    window.browser = {
+      runtime: {
+        getURL: (path) => path
+      },
+      storage: {
+        local: {
+          get: (obj) => Promise.resolve(obj),
+          set: () => Promise.resolve()
+        }
+      }
+    };
+    // Helper to trigger the animation
+    function triggerPack(percent) {
+      // Create a trace-symbol and a parent <a> as expected by content.js
+      var traceSymbol = document.createElement('trace-symbol');
+      traceSymbol.setAttribute('status', 'SUCCEEDED');
+      traceSymbol.setAttribute('successpercent', percent);
+      traceSymbol.setAttribute('errorstatus', '');
+      var aTag = document.createElement('a');
+      aTag.href = 'https://example.com/trace/test';
+      aTag.appendChild(traceSymbol);
+      var button = document.createElement('button');
+      button.textContent = 'Open EpiPack';
+      aTag.insertBefore(button, traceSymbol);
+      traceSymbol.setAttribute('link', aTag.href);
+      openPackAnimation(button, percent);
+    }
+    document.getElementById('btn-100').onclick = function() { triggerPack(100); };
+    document.getElementById('btn-0').onclick = function() { triggerPack(0); };
+    document.getElementById('btn-random').onclick = function() { triggerPack(Math.floor(Math.random()*101)); };
+    document.getElementById('mock-pack').onclick = function() { triggerPack(Math.floor(Math.random()*101)); };
+  </script>
+  <script src="content.js"></script>
+</body>
+</html> 
