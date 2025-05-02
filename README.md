@@ -4,6 +4,14 @@
 
 While im waiting for Mozilla validation, you can still download the extension directly from the [GitHub releases page](https://github.com/Axthauvin/epitrace-packs/releases/tag/1.0.1).
 
+## Installation locally
+
+1. Download the zip file in the releases page
+2. Go to about:debugging#/runtime/this-firefox
+3. Click on "Load Temporary Add-on"
+4. Upload the zip file
+5. Have fun !
+
 ## Overview
 
 The EPITRACE Packs extension is a web extension designed to enhance the experience of EPITA students. This extension allows users to open traces as FIFA packs, adding an element of fun during projects or piscines, and providing an **_opportunity to flex_**.
