@@ -13,7 +13,7 @@ function addHashToDB(hash) {
 
 // Function to check if the database contains the hash
 async function isHashInDB(hash) {
-  //   return false; // add this line for debbugging purpose
+  // return false; // add this line for debbugging purpose
   let result = await browserAPI.storage.local.get({ hashes: [] });
   return result.hashes.includes(hash);
 }
@@ -24,8 +24,18 @@ async function getDB() {
   return result.hashes;
 }
 
+function affiche_bozo(pack, pack_text) {
+  pack.style.backgroundImage = `url(${browserAPI.runtime.getURL(
+    "img/rip_bozo.jpg"
+  )})`;
+  pack.style.width = "744px";
+  pack.style.height = "609px";
+  pack_text.style.display = "none";
+}
+
 function animateReveal(finalScore, pack, pack_text, duration = 3000) {
   const start = performance.now();
+  const shouldFakeDrop = finalScore < 20;
 
   function update(now) {
     const elapsed = now - start;
@@ -33,31 +43,39 @@ function animateReveal(finalScore, pack, pack_text, duration = 3000) {
 
     // easing (ex: easeOutCubic)
     const eased = 1 - Math.pow(1 - t, 3);
-    const currentScore = Math.floor(eased * finalScore);
 
-    pack_text.textContent = Math.floor(currentScore);
+    // Soit on monte depuis 0, soit on descend depuis 100
+    const currentScore = shouldFakeDrop
+      ? Math.floor(100 - eased * (100 - finalScore))
+      : Math.floor(eased * finalScore);
+
+    pack_text.textContent = currentScore;
     pack_text.style.color = get_color(get_image(currentScore));
     pack.style.backgroundImage = `url(${get_url(currentScore)})`;
+
+    if (currentScore == 0) {
+      affiche_bozo(pack, pack_text);
+    } else {
+      pack.style.width = "400px";
+      pack.style.height = "600px";
+      pack_text.style.display = "block";
+    }
 
     if (t < 1) {
       requestAnimationFrame(update);
     } else {
-      pack_text.textContent = Math.floor(finalScore);
-      pack_text.style.color = get_color(get_image(finalScore));
-      pack.style.backgroundImage = `url(${get_url(currentScore)})`;
+      // état final propre
 
       if (finalScore == 0) {
-        pack.style.backgroundImage = `url(${browserAPI.runtime.getURL(
-          "img/rip_bozo.jpg"
-        )})`;
-
-        pack.style.width = "744px";
-        pack.style.height = "609px";
-        pack_text.style.display = "none";
+        affiche_bozo(pack, pack_text);
+        return;
       } else if (finalScore == 100) {
-        // GG btw
         make_confetis();
       }
+
+      pack_text.textContent = finalScore;
+      pack_text.style.color = get_color(get_image(finalScore));
+      pack.style.backgroundImage = `url(${get_url(finalScore)})`;
     }
   }
 
