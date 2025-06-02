@@ -6,10 +6,16 @@
   "content_scripts": [
     {
       "matches": ["*://intra.forge.epita.fr/*"],
-      "js": ["content.js"],
+      "js": ["ts-particules.js", "utils.js", "content.js"],
       "css": ["style.css"]
     }
   ],
+  "icons": {
+    "16": "img/extension_icon.png",
+    "32": "img/extension_icon.png",
+    "48": "img/extension_icon.png",
+    "128": "img/extension_icon.png"
+  },
   "web_accessible_resources": [
     {
       "resources": ["img/*"],

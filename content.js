@@ -1,35 +1,8 @@
 // content.js
 
-const browserAPI = typeof browser !== "undefined" ? browser : chrome;
-
-console.log("content.js");
-
 function find_a(el) {
   if (el.tagName == "A") return el;
   return find_a(el.parentElement);
-}
-
-// Function to add the current hash to a database
-function addHashToDB(hash) {
-  browserAPI.storage.local.get({ hashes: [] }).then((result) => {
-    let hashes = result.hashes;
-    if (!hashes.includes(hash)) {
-      hashes.push(hash);
-      browserAPI.storage.local.set({ hashes: hashes });
-    }
-  });
-}
-
-// Function to check if the database contains the hash
-async function isHashInDB(hash) {
-  let result = await browserAPI.storage.local.get({ hashes: [] });
-  return result.hashes.includes(hash);
-}
-
-// Function to check if the database contains the hash
-async function getDB() {
-  let result = await browserAPI.storage.local.get({ hashes: [] });
-  return result.hashes;
 }
 
 let confettiWrapper = document.createElement("div");
@@ -98,8 +71,6 @@ async function add_open_pack_button(traceSymbol) {
   traceSymbol.parentNode.insertBefore(button, traceSymbol);
 
   a_tag.href = "#";
-  console.log(a_tag);
-  console.log(traceSymbol);
 
   traceSymbol.setAttribute("link", link);
 
@@ -134,7 +105,6 @@ async function replaceTraceSymbols() {
 
   for (let i = 0; i < all_in_list.length; i++) {
     var href = all_in_list[i].href;
-    console.log(href);
     var is_inside = false;
     for (let j = 0; j < hashes.length; j++) {
       // Ne contient pas, donc je mets la classe en normal + j'enlève l'indicateur
@@ -157,45 +127,6 @@ const observer = new MutationObserver(replaceTraceSymbols);
 observer.observe(document.body, { childList: true, subtree: true });
 
 replaceTraceSymbols(); // Initial replacement in case elements are already present
-
-function make_confetis() {
-  const confettiWrapper = document.querySelector(".confetti-wrapper");
-  if (confettiWrapper.children.length > 0) return; // Prevent infinite confetti
-
-  // Generate confetti
-  for (let i = 0; i < 30; i++) {
-    const confetti = document.createElement("div");
-    confetti.classList.add("confetti-piece");
-    confetti.style.left = `${Math.random() * 100}%`;
-    confetti.style.setProperty("--fall-duration", `${Math.random() * 3 + 3}s`);
-    confetti.style.setProperty("--confetti-color", getRandomColor());
-    confettiWrapper.appendChild(confetti);
-  }
-
-  setTimeout(() => {
-    confettiWrapper.innerHTML = ""; // Remove confetti after animation
-  }, 4000);
-
-  function getRandomColor() {
-    const colors = ["#ff6347", "#ffa500", "#32cd32", "#1e90ff", "#ff69b4"];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-}
-
-function get_image(percentage) {
-  if (percentage == 100) return "icon";
-  if (percentage >= 90) return "rare_gold";
-  if (percentage >= 80) return "gold";
-  if (percentage >= 60) return "silver";
-  if (percentage >= 40) return "rare_bronze";
-  if (percentage >= 1) return "bronze";
-  return "icon"; // im a troller eheheh
-}
-
-function get_color(image) {
-  if (image == "rare_gold") return "#F6DB7B";
-  return "#1e252a";
-}
 
 function get_url(percentage) {
   return browserAPI.runtime.getURL("img/" + get_image(percentage) + ".png");
@@ -223,81 +154,26 @@ async function openPackAnimation(button, inputPercentage) {
     .getElementsByTagName("trace-symbol")[0]
     .getAttribute("link");
 
-  /*for (let i = 0; i < 3; i++) {
-    let randomPercentage = ; // Random percentage between 0 and 100
-    
-  }*/
   setTimeout(() => {
-    let currentPercentage = 100;
-    let decreaseTime = 1000; // 1 second total decrease time
-    let steps = 10; // Number of steps
-    let stepTime = decreaseTime / steps;
+    animateReveal(inputPercentage, pack, pack_text);
+    pack.style.cursor = "pointer";
 
-    let percentages = [
-      Math.floor(Math.random() * 100),
-      //Math.floor(Math.random() * 100),
-      inputPercentage,
-    ];
+    let span = document.createElement("span");
+    span.textContent = "Click on the card to see your trace";
+    span.style.color = "white";
+    span.style.position = "absolute";
+    span.style.bottom = "10px";
+    span.style.left = "50%";
+    span.style.transform = "translateX(-50%)";
+    span.style.fontSize = "20px";
+    span.style.fontWeight = "bold";
+    document.getElementById("pack-displayer").appendChild(span);
 
-    pack_text.style.color = get_color(get_image(currentPercentage));
+    addHashToDB(href);
 
-    let i = 0;
-
-    let decrement = (100 - percentages[i]) / steps;
-
-    let interval = setInterval(() => {
-      if (currentPercentage > percentages[i]) {
-        // Generate a random variation
-        currentPercentage -= decrement;
-        currentPercentage = Math.max(currentPercentage, percentages[i]); // Ensure it doesn't go below target
-
-        pack_text.textContent = Math.floor(currentPercentage);
-        pack_text.style.color = get_color(get_image(currentPercentage));
-        pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
-      } else {
-        pack_text.textContent = percentages[i];
-
-        pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
-
-        if (i == percentages.length - 1) {
-          clearInterval(interval);
-          if (percentages[i] == 100) {
-            make_confetis();
-          } else if (percentages[i] == 0) {
-            pack.style.backgroundImage = `url(${browserAPI.runtime.getURL(
-              "img/rip_bozo.jpg"
-            )})`;
-
-            pack.style.width = "744px";
-            pack.style.height = "609px";
-            pack_text.style.display = "none";
-          }
-
-          pack.style.cursor = "pointer";
-
-          let span = document.createElement("span");
-          span.textContent = "Click on the card to see your trace";
-          span.style.color = "white";
-          span.style.position = "absolute";
-          span.style.bottom = "10px";
-          span.style.left = "50%";
-          span.style.transform = "translateX(-50%)";
-          span.style.fontSize = "20px";
-          span.style.fontWeight = "bold";
-          document.getElementById("pack-displayer").appendChild(span);
-
-          addHashToDB(href);
-
-          pack.addEventListener("click", function () {
-            document.location.href = href;
-          });
-        }
-
-        i++;
-
-        decrement = (100 - percentages[i]) / steps;
-        currentPercentage = 100;
-      }
-    }, stepTime);
+    pack.addEventListener("click", function (event) {
+      event.stopPropagation(); // Empêche le parent de recevoir l'événement
+      window.location.href = href;
+    });
   }, 1000);
 }
