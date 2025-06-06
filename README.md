@@ -1,4 +1,4 @@
-# EPITRACE Packs Extension - Crossplatform Chrome & Firefox extension !
+# EPITRACE Packs Extension !
 
 ## Download
 
