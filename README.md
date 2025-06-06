@@ -1,6 +1,18 @@
 # EPITRACE Packs Extension !
 
-## Download
+## Overview
+
+The EPITRACE Packs extension is a web extension designed to enhance the experience of EPITA students. This extension allows users to open traces as FIFA packs, adding an element of fun during projects or piscines, and providing an **_opportunity to flex_**.
+
+## Features
+
+- **Open Traces as FIFA Packs**: Transform your traces into FIFA packs for an engaging experience.
+
+- **Flex Your Achievements**: Flex in front of your friends when you have a icon pack !
+
+![EPITRACE Packs Extension](./images_github/illustration.gif)
+
+## Installation
 
 ### Firefix based browser
 You can install the extension directly from the Mozilla addons:
@@ -19,26 +31,6 @@ You can also download the latest `.zip` version from the GitHub Releases page:
 > 2. Open `chrome://extensions` in your browser.
 > 3. Enable **Developer Mode** (top-right).
 > 4. Click **"Load unpacked"** and select the extracted folder.
-
-## Overview
-
-The EPITRACE Packs extension is a web extension designed to enhance the experience of EPITA students. This extension allows users to open traces as FIFA packs, adding an element of fun during projects or piscines, and providing an **_opportunity to flex_**.
-
-## Features
-
-- **Open Traces as FIFA Packs**: Transform your traces into FIFA packs for an engaging experience.
-
-- **Flex Your Achievements**: Flex in front of your friends when you have a icon pack !
-
-![EPITRACE Packs Extension](./images_github/illustration.gif)
-
-## Installation
-
-To install the EPITRACE Packs extension, follow these steps:
-
-1. Download the extension.
-2. Add the extension to the browser and confirm the installation.
-3. Open the intranet, and go open your traces !
 
 ## Contributing
 
