@@ -11,10 +11,10 @@
     }
   ],
   "icons": {
-    "16": "img/extension_icon.png",
-    "32": "img/extension_icon.png",
-    "48": "img/extension_icon.png",
-    "128": "img/extension_icon.png"
+    "16": "img/extension_iconx16.png",
+    "32": "img/extension_iconx32.png",
+    "48": "img/extension_iconx48.png",
+    "128": "img/extension_iconx128.png"
   },
   "web_accessible_resources": [
     {
@@ -23,5 +23,10 @@
     }
   ],
   "permissions": ["storage"],
-  "host_permissions": ["*://intra.forge.epita.fr/*"]
+  "host_permissions": ["*://intra.forge.epita.fr/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "axel.thauvin@epita.fr"
+    }
+  }
 }
