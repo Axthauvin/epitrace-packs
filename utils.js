@@ -1,21 +1,32 @@
 const browserAPI = typeof browser !== "undefined" ? browser : chrome;
 
 // Function to add the current hash to a database
-function addHashToDB(hash) {
-  browserAPI.storage.local.get({ hashes: [] }).then((result) => {
-    let hashes = result.hashes;
+async function addHashToDB(hash) {
+  try {
+    const { hashes = [] } = await browserAPI.storage.local.get("hashes");
+
     if (!hashes.includes(hash)) {
       hashes.push(hash);
-      browserAPI.storage.local.set({ hashes: hashes });
+      await browserAPI.storage.local.set({ hashes });
+      console.log("Added hash to DB:", hash);
+    } else {
+      console.log("Hash already in DB:", hash);
     }
-  });
+  } catch (error) {
+    console.error("Failed to add hash to DB:", error);
+  }
 }
 
 // Function to check if the database contains the hash
 async function isHashInDB(hash) {
   // return false; // add this line for debbugging purpose
-  let result = await browserAPI.storage.local.get({ hashes: [] });
-  return result.hashes.includes(hash);
+  const result = await browserAPI.storage.local.get({ hashes: [] });
+  const storedHashes = result.hashes;
+
+  // Exact match OR startsWith match
+  return storedHashes.some(
+    (storedHash) => hash === storedHash || hash.startsWith(storedHash)
+  );
 }
 
 // Function to get the database from the local storage

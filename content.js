@@ -99,7 +99,8 @@ async function replaceTraceSymbols() {
 
   if (document.getElementsByClassName("list").length == 0) return;
 
-  var all_in_list = document.getElementsByClassName("list")[0].children;
+  const lists = document.getElementsByClassName("list");
+  var all_in_list = lists[lists.length - 1].children;
 
   var hashes = await getDB();
 
@@ -115,9 +116,16 @@ async function replaceTraceSymbols() {
 
     if (!is_inside) {
       all_in_list[i].classList.remove("list__item__secondary");
-      var checkMark =
+      const items_inside =
         all_in_list[i].getElementsByClassName("list__item__right")[0];
-      if (checkMark) checkMark.innerHTML = "";
+      var checkMark = items_inside.children[0];
+
+      if (items_inside.getElementsByTagName("trace-symbol").length != 0)
+        checkMark = items_inside.getElementsByTagName("trace-symbol")[0];
+      console.log(checkMark);
+      if (checkMark) checkMark.style.display = "none";
+      // checkMark.style.display = "none";
+      all_in_list[i].classList.add("old_list__item__secondary");
     }
   }
 }
@@ -177,3 +185,26 @@ async function openPackAnimation(button, inputPercentage) {
     });
   }, 1000);
 }
+
+browserAPI.runtime.onMessage.addListener(
+  async (request, sender, sendResponse) => {
+    if (request.action === "unlock") {
+      // console.log("popup asked unlock all");
+      var alls = document.querySelectorAll("trace-symbol");
+      for (let traceSymbol of alls) {
+        var hash = traceSymbol.getAttribute("link");
+        // console.log(hash);
+        addHashToDB(hash);
+      }
+
+      var containers = document.querySelectorAll(".old_list__item__secondary");
+      console.log(containers.length);
+      for (let a of containers) {
+        await addHashToDB(a.href);
+      }
+
+      document.location.reload();
+    }
+    return false;
+  }
+);

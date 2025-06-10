@@ -22,11 +22,14 @@
       "matches": ["*://intra.forge.epita.fr/*"]
     }
   ],
-  "permissions": ["storage"],
+  "permissions": ["tabs", "scripting", "storage"],
   "host_permissions": ["*://intra.forge.epita.fr/*"],
   "browser_specific_settings": {
     "gecko": {
       "id": "axel.thauvin@epita.fr"
     }
+  },
+  "action": {
+    "default_popup": "popup.html"
   }
 }

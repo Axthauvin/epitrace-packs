@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EPITRACE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <style>
+    body {
+      background-color: #111217;
+
+      margin: 0;
+      /* height: 500px; */
+    }
+
+    header {
+      background-color: #1a1c23;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+      padding: 20px 35px 22px;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 39px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+      --background: #111217 !important;
+      --card-background: #1a1c23 !important;
+      --card-separator: #262931 !important;
+      --card-footer: #16181f !important;
+      --rectangle-background: #0d0e12 !important;
+      --navigation-background: #0d0e14 !important;
+      --tag-background: #101117 !important;
+      --border: #27282f !important;
+      --primary-text: #dcdff0 !important;
+      --secondary-text: #9ca3b8 !important;
+      --trivial: #1469cd !important;
+      --easy: #43b11d !important;
+      --medium: #dac400 !important;
+      --hard: #da3400 !important;
+      --checkmark: #43b11d !important;
+
+      color: var(--primary-text) !important;
+      font-family: "Inter";
+    }
+
+    button {
+      padding: 15px 18px;
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-background);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #dcdff0 !important;
+    }
+
+    button:hover {
+      border: 1px solid var(--secondary-text);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      width: 100%;
+      padding: 35px;
+      margin-top: 35px;
+      padding-top: 0;
+      flex-grow: 1;
+    }
+
+    header > .subtitle {
+      font-size: 20px;
+      font-weight: 400;
+      margin-top: 9px;
+      color: var(--secondary-text);
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      gap: 13px;
+    }
+  </style>
+
+  <body>
+    <header>
+      <h1>EPITRACE</h1>
+      <div class="subtitle">Configuration</div>
+    </header>
+    <main>
+      <button id="unlocker">Unlock every packs on this page</button>
+    </main>
+  </body>
+
+  <script src="popup.js"></script>
+</html>
