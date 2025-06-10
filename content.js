@@ -122,7 +122,8 @@ async function replaceTraceSymbols() {
       if (items_inside.getElementsByTagName("trace-symbol").length != 0)
         checkMark = items_inside.getElementsByTagName("trace-symbol")[0];
       console.log(checkMark);
-      if (checkMark) checkMark.style.display = "none";
+      if (checkMark && checkMark.getAttribute("status") == "SUCCEEDED")
+        checkMark.style.display = "none";
       // checkMark.style.display = "none";
       all_in_list[i].classList.add("old_list__item__secondary");
     }
