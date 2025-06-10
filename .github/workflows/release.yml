@@ -1,28 +1,22 @@
 name: Build & Release Extension
-
 on:
   push:
     tags:
       - "release*"
   workflow_dispatch: # Permet de lancer manuellement
-
 jobs:
   build:
     name: Create ZIP and Release
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Create ZIP file
         run: |
           zip -r epitrace-pack.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
-
       - name: Create XPI file
         run: |
           zip -r epitrace.xpi . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
-
       - name: Upload ZIP as artifact (for debugging)
         uses: actions/upload-artifact@v4
         with:
@@ -30,28 +24,23 @@ jobs:
           path: |
             epitrace-pack.zip
             epitrace.xpi
-
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GH_PAT }}
           tag: v1.0.${{ github.run_number }}
           name: "EPITRACE Pack Release v1.0.${{ github.run_number }}"
-          artifacts: epitrace-pack.zip
+          artifacts: |
+            epitrace-pack.zip
+            epitrace.xpi
           body: |
             ### Firefox based browser
-
             Install directly in Firefox:  
             [Download EPITRACE.xpi](epitrace.xpi)
-
             ---
-
             ### Manual Installation for Chrome based browser
-
             You can also download the latest `.zip` version from the GitHub Releases page:
-
             🛠️ To install manually in Chrome:
-
             1. Download and unzip the archive.
             2. Open `chrome://extensions` in your browser.
             3. Enable **Developer Mode** (top-right).
