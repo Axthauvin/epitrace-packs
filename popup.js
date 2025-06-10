@@ -1,12 +1,16 @@
 const browserAPI = typeof browser !== "undefined" ? browser : chrome;
 
-document.getElementById("unlocker").addEventListener("click", () => {
-  console.log("clicked on unlocker");
-  browserAPI.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0];
+function addMessageOnButton(id) {
+  document.getElementById(id).addEventListener("click", () => {
+    browserAPI.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
 
-    browserAPI.tabs.sendMessage(activeTab.id, {
-      action: "unlock",
+      browserAPI.tabs.sendMessage(activeTab.id, {
+        action: id,
+      });
     });
   });
-});
+}
+
+addMessageOnButton("unlock");
+addMessageOnButton("repack");

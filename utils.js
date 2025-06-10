@@ -35,6 +35,27 @@ async function getDB() {
   return result.hashes;
 }
 
+async function removeHashFromDB(targetHash) {
+  try {
+    const { hashes = [] } = await browserAPI.storage.local.get("hashes");
+
+    const filtered = hashes.filter(
+      (storedHash) =>
+        !(
+          (
+            storedHash === targetHash || // exact match
+            storedHash.startsWith(targetHash + "/") || // is a subpath of target
+            targetHash.startsWith(storedHash + "/")
+          ) // is a parent of target
+        )
+    );
+
+    await browserAPI.storage.local.set({ hashes: filtered });
+  } catch (error) {
+    console.error("❌ Failed to remove hashes:", error);
+  }
+}
+
 function affiche_bozo(pack, pack_text) {
   pack.style.backgroundImage = `url(${browserAPI.runtime.getURL(
     "img/rip_bozo.jpg"
