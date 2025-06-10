@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "EPITRACE Packs",
-  "version": "2.1",
+  "version": "2.2",
   "description": "Open your traces with a FIFA-style packs with an animation!",
   "content_scripts": [
     {
