@@ -31,7 +31,13 @@
     h1 {
       font-weight: 700;
       font-size: 39px;
+      color: #ffe393 !important;
     }
+
+    h1 a {
+      text-decoration: none;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -70,6 +76,8 @@
       cursor: pointer;
       transition: 0.3s;
       color: #dcdff0 !important;
+
+      text-align: left;
     }
 
     button:hover {
@@ -114,13 +122,15 @@
       display: flex;
       width: 100%;
       margin-top: 20px;
-      justify-content: space-evenly;
+      justify-content: space-between;
     }
   </style>
 
   <body>
     <header>
-      <h1>EPITRACE</h1>
+      <h1>
+        <a href="https://github.com/Axthauvin/epitrace-packs">EPITRACE</a>
+      </h1>
       <div class="subtitle">Configuration</div>
     </header>
     <main>
@@ -135,7 +145,7 @@
           >Issues ?</a
         >
         <a href="https://github.com/Axthauvin/epitrace-packs/pulls"
-          >Help me improve the extension</a
+          >Contribute to the extension</a
         >
       </div>
     </footer>
