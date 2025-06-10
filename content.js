@@ -56,8 +56,6 @@ async function add_open_pack_button(traceSymbol) {
 
   if ((await isHashInDB(link)) == true) return; // Skip if already processed
 
-  console.log("here !!");
-
   let percentage = traceSymbol.getAttribute("successpercent");
   let button = document.createElement("button");
   button.textContent = "Open EpiPack";
@@ -121,11 +119,12 @@ async function replaceTraceSymbols() {
 
       if (items_inside.getElementsByTagName("trace-symbol").length != 0)
         checkMark = items_inside.getElementsByTagName("trace-symbol")[0];
-      console.log(checkMark);
-      const url = window.location.href.split("/");
+      // we remove trailing /
+      const url = window.location.href.replace(/\/$/, "").split("/");
+      // console.log(url);
       if (
         checkMark &&
-        (url[url.length - 2] == "root" ||
+        (url[url.length - 1] == "root" ||
           checkMark.getAttribute("status") == "SUCCEEDED")
       )
         checkMark.style.display = "none";
@@ -203,16 +202,13 @@ browserAPI.runtime.onMessage.addListener(
       }
 
       var containers = document.querySelectorAll(".old_list__item__secondary");
-      console.log(containers.length);
       for (let a of containers) {
         await addHashToDB(a.href);
       }
     }
 
     if (request.action === "repack") {
-      console.log("popup asked repack");
       var alls = document.querySelectorAll("trace-symbol");
-      console.log(alls);
       for (let traceSymbol of alls) {
         var hash = find_a(traceSymbol);
         // console.log(hash);
@@ -220,7 +216,6 @@ browserAPI.runtime.onMessage.addListener(
       }
 
       var containers = document.querySelectorAll(".list__item__secondary");
-      console.log(containers.length);
       for (let a of containers) {
         await removeHashFromDB(a.href);
       }
