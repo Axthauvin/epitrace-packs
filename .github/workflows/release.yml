@@ -35,7 +35,8 @@ jobs:
             epitrace.xpi
           body: |
             ### Firefox based browser
-            Install directly in Firefox:  
+
+            Install directly in Firefox using the provided `.xpi`:  
             [Download EPITRACE.xpi](epitrace.xpi)
             ---
             ### Manual Installation for Chrome based browser

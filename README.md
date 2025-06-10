@@ -14,7 +14,7 @@ The EPITRACE Packs extension is a web extension designed to enhance the experien
 
 ## Installation
 
-Aller sur la page release et suivre les instructions :
+Check the release page and follow the instructions :
 
 [**GitHub Releases**](https://github.com/Axthauvin/epitrace-packs/releases/)
 
