@@ -18,7 +18,7 @@ The EPITRACE Packs extension is a web extension designed to enhance the experien
 
 You can install the extension directly from the Mozilla addons:
 
-[**Download from Mozilla**](https://addons.mozilla.org/firefox/downloads/file/4508497/50ff204e3f9641388f39-1.0.xpi)
+[**Download from Mozilla**](https://addons.mozilla.org/firefox/downloads/file/4508497/50ff204e3f9641388f39-latest.xpi)
 
 ---
 
