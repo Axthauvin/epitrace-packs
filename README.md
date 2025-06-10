@@ -1,4 +1,4 @@
-# EPITRACE Packs Extension !
+# EPITRACE Packs Extension
 
 ## Overview
 
@@ -14,7 +14,8 @@ The EPITRACE Packs extension is a web extension designed to enhance the experien
 
 ## Installation
 
-### Firefix based browser
+### Firefox based browser
+
 You can install the extension directly from the Mozilla addons:
 
 [**Download from Mozilla**](https://addons.mozilla.org/firefox/downloads/file/4508497/50ff204e3f9641388f39-1.0.xpi)
@@ -22,11 +23,13 @@ You can install the extension directly from the Mozilla addons:
 ---
 
 ### Manual Installation for Chrome based browser
+
 You can also download the latest `.zip` version from the GitHub Releases page:
 
 [**GitHub Releases**](https://github.com/Axthauvin/epitrace-packs/releases/)
 
 > 🛠️ To install manually in Chrome:
+>
 > 1. Download and unzip the archive.
 > 2. Open `chrome://extensions` in your browser.
 > 3. Enable **Developer Mode** (top-right).

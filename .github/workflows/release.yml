@@ -26,12 +26,30 @@ jobs:
           path: epitrace-pack.zip
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        if: success()
+        uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GH_PAT }}
-          tag_name: v1.0.${{ github.run_number }}
+          tag: v1.0.${{ github.run_number }}
           name: "EPITRACE Pack Release v1.0.${{ github.run_number }}"
-          draft: false
-          prerelease: false
-          files: epitrace-pack.zip
+          artifacts: epitrace-pack.zip
+          body: |
+            ### Firefox based browser
+
+            You can install the extension directly from the Mozilla addons:
+
+            [**Download from Mozilla**](https://addons.mozilla.org/firefox/downloads/file/4508497/50ff204e3f9641388f39-1.0.xpi)
+
+            ---
+
+            ### Manual Installation for Chrome based browser
+
+            You can also download the latest `.zip` version from the GitHub Releases page:
+
+            [**GitHub Releases**](https://github.com/Axthauvin/epitrace-packs/releases/)
+
+            > 🛠️ To install manually in Chrome:
+            >
+            > 1. Download and unzip the archive.
+            > 2. Open `chrome://extensions` in your browser.
+            > 3. Enable **Developer Mode** (top-right).
+            > 4. Click **"Load unpacked"** and select the extracted folder.
