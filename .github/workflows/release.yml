@@ -36,13 +36,20 @@ jobs:
           body: |
             ### Firefox based browser
 
-            Install directly in Firefox using the provided `.xpi`:  
+            Install directly in Firefox using the provided `.xpi` file:  
             [Download EPITRACE.xpi](https://github.com/Axthauvin/epitrace-packs/releases/download/v1.0.${{ github.run_number }}/epitrace.xpi)
+
+            > To install the extension, you may need to disable **`xpinstall.signatures.required`** in **`about:config`**.
+
             ---
+
             ### Manual Installation for Chrome based browser
+
             You can also download the latest `.zip` version from the GitHub Releases page:
+
             🛠️ To install manually in Chrome:
-            1. Download and unzip the archive.
-            2. Open `chrome://extensions` in your browser.
-            3. Enable **Developer Mode** (top-right).
+
+            1. Download and unzip the archive.  
+            2. Open `chrome://extensions` in your browser.  
+            3. Enable **Developer Mode** (top-right).  
             4. Click **"Load unpacked"** and select the extracted folder.
