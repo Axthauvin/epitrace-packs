@@ -19,11 +19,17 @@ jobs:
         run: |
           zip -r epitrace-pack.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
 
+      - name: Create XPI file
+        run: |
+          zip -r epitrace.xpi . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
+
       - name: Upload ZIP as artifact (for debugging)
         uses: actions/upload-artifact@v4
         with:
           name: epitrace-pack
-          path: epitrace-pack.zip
+          path: |
+            epitrace-pack.zip
+            epitrace.xpi
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
@@ -35,9 +41,8 @@ jobs:
           body: |
             ### Firefox based browser
 
-            You can install the extension directly from the Mozilla addons:
-
-            [**Download from Mozilla**](https://addons.mozilla.org/firefox/downloads/file/4508497/50ff204e3f9641388f39-latest.xpi)
+            Install directly in Firefox:  
+            [Download EPITRACE.xpi](epitrace.xpi)
 
             ---
 
